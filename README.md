@@ -1,2 +1,0 @@
-# AmishGotham.github.io
-hello
