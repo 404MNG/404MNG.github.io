@@ -22,7 +22,7 @@
             <header class="login-header">
                 <h3 class="subtitle">SECURITY CLEARANCE</h3>
                 <h1 class="glitch-title">CITIZEN LOGIN</h1>
-                <p id="status-msg">Verifying biological signature...</p>
+                <p>Verifying biological signature...</p>
             </header>
 
             <form class="login-form">
@@ -50,7 +50,6 @@
 
     const loginForm = document.querySelector('.login-form');
     const btn = document.querySelector('.login-btn');
-    const statusMsg = document.getElementById('status-msg');
 
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault(); 
@@ -58,44 +57,23 @@
         const userVal = document.getElementById('username').value.trim();
         const keyVal = document.getElementById('access_key').value.trim();
         
-        btn.innerText = "FETCHING UUID...";
+        btn.innerText = "QUERYING DATABASE...";
         btn.disabled = true;
 
         try {
-            // STEP A: Fetch UUID from Mojang API (Handles name changes)
-            const mojangRes = await fetch(`https://api.minetools.eu/uuid/${userVal}`);
-            const mcData = await mojangRes.json();
-
-            if (mcData.status === "ERR") {
-                throw new Error("Citizen Not Found in Mojang DB");
-            }
-
-            const playerUUID = mcData.id; 
-            const currentName = mcData.name; // Their latest name
-
-            btn.innerText = "QUERYING RECORDS...";
-
-            // STEP B: Find citizen by UUID instead of Name
+            // STEP 2: Find citizen by Username and Access Key
             const { data, error } = await _supabase
                 .from('citizens')
                 .select('*')
-                .eq('uuid', playerUUID.toUpperCase()) 
+                .eq('username', userVal)
                 .eq('access_key', keyVal)
                 .single();
-            
+
             if (error || !data) {
                 throw new Error("Invalid Signature");
             }
 
-            // STEP C: Auto-Update Username in Supabase if it changed
-            if (data.username !== currentName) {
-                await _supabase
-                    .from('citizens')
-                    .update({ username: currentName })
-                    .eq('uuid', playerUUID);
-            }
-
-            // STEP D: CHECK BANS/KICKS
+            // STEP 3: CHECK BANS/KICKS
             const now = new Date();
             const expiry = data.expiry_timestamp ? new Date(data.expiry_timestamp) : null;
 
@@ -112,7 +90,7 @@
             btn.style.background = "#00ff88";
             btn.innerText = "ACCESS GRANTED";
             
-            localStorage.setItem('citizenName', currentName);
+            localStorage.setItem('citizenName', data.username);
             localStorage.setItem('citizenRank', data.rank || 'Resident');
             localStorage.setItem('citizenStatus', data.status);
             localStorage.setItem('citizenSector', data.sector);
@@ -126,7 +104,7 @@
         } catch (err) {
             console.error("Login Error:", err);
             btn.style.background = "#ff3366";
-            btn.innerText = (err.message === "Citizen Not Found in Mojang DB") ? "ID NOT RECOGNIZED" : "INVALID SIGNATURE";
+            btn.innerText = "INVALID SIGNATURE";
             
             setTimeout(() => {
                 btn.style.background = "#bc13fe";
