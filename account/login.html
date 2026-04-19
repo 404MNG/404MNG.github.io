@@ -91,10 +91,13 @@
                 btn.style.background = "#00ff88";
                 btn.innerText = "ACCESS GRANTED";
                 
+                // Saving everything to browser memory for the dashboard
                 localStorage.setItem('citizenName', data.username);
                 localStorage.setItem('citizenRank', data.rank || 'Resident');
                 localStorage.setItem('citizenStatus', data.status);
-                localStorage.setItem('citizenWarning', data.punishment_reason);
+                localStorage.setItem('citizenSector', data.sector || 'Unknown'); // NEW
+                localStorage.setItem('citizenWarnings', data.warnings || '0');   // NEW
+                localStorage.setItem('citizenReason', data.punishment_reason || 'None');
 
                 setTimeout(() => {
                     window.location.href = "../citizen/dashboard.html";
@@ -102,6 +105,7 @@
 
             } catch (err) {
                 // 5. ERROR HANDLING
+                console.error("Login Error:", err);
                 btn.style.background = "#ff3366";
                 btn.innerText = "INVALID SIGNATURE";
                 setTimeout(() => {
