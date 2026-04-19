@@ -6,6 +6,7 @@
     <title>Uxarieus | Secure Access</title>
     <link rel="stylesheet" href="login.css">
     <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div class="bg-orb orb-1"></div>
@@ -19,28 +20,90 @@
             
             <header class="login-header">
                 <h3 class="subtitle">SECURITY CLEARANCE</h3>
-                <h1 class="glitch-title" style="font-size: 2.5rem;">CITIZEN LOGIN</h1>
+                <h1 class="glitch-title">CITIZEN LOGIN</h1>
                 <p>Verifying biological signature...</p>
             </header>
 
             <form class="login-form">
                 <div class="input-group">
                     <label>CITIZEN ID</label>
-                    <input type="text" placeholder="Username" required>
+                    <input type="text" id="username" placeholder="Username" required>
                 </div>
                 
                 <div class="input-group">
                     <label>ACCESS KEY</label>
-                    <input type="password" placeholder="••••••••" required>
+                    <input type="password" id="access_key" placeholder="••••••••" required>
                 </div>
 
                 <button type="submit" class="login-btn">INITIALIZE LINK</button>
             </form>
-
-            <div class="auth-footer">
-                <p>Encryption: <strong>1024-BIT GALLIFREYAN</strong></p>
-            </div>
         </div>
     </div>
+
+    <script>
+        // 2. PASTE YOUR SUPABASE PROJECT DETAILS HERE
+        const supabaseUrl = 'YOUR_SUPABASE_URL';
+        const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+        const supabase = supabasejs.createClient(supabaseUrl, supabaseKey);
+
+        const loginForm = document.querySelector('.login-form');
+        const btn = document.querySelector('.login-btn');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const userVal = document.getElementById('username').value.trim();
+            const keyVal = document.getElementById('access_key').value.trim();
+            
+            btn.innerText = "QUERYING DATABASE...";
+            btn.disabled = true;
+
+            // 3. CHECK SUPABASE
+            const { data, error } = await supabase
+                .from('citizens')
+                .select('*')
+                .eq('username', userVal)
+                .eq('access_key', keyVal)
+                .single();
+
+            if (data) {
+                const now = new Date();
+                const expiry = data.expiry_timestamp ? new Date(data.expiry_timestamp) : null;
+
+                // 4. BAN & KICK ENFORCEMENT
+                if (data.status === 'Banned' || (data.status === 'Kicked' && expiry > now)) {
+                    const reason = data.punishment_reason || "Violation of Town Conduct";
+                    btn.style.background = "#ff3366";
+                    btn.innerText = "ACCESS DENIED";
+                    alert(`🚨 ACCESS REVOKED\nStatus: ${data.status}\nReason: ${reason}`);
+                    btn.disabled = false;
+                    return;
+                }
+
+                // 5. SUCCESS
+                btn.style.background = "#00ff88";
+                btn.innerText = "ACCESS GRANTED";
+                
+                localStorage.setItem('citizenName', data.username);
+                localStorage.setItem('citizenRank', data.rank || 'Resident');
+                localStorage.setItem('citizenStatus', data.status);
+                localStorage.setItem('citizenWarning', data.punishment_reason);
+
+                setTimeout(() => {
+                    window.location.href = "../citizen/dashboard.html";
+                }, 1000);
+
+            } else {
+                // 6. FAILURE
+                btn.style.background = "#ff3366";
+                btn.innerText = "INVALID SIGNATURE";
+                setTimeout(() => {
+                    btn.style.background = "#bc13fe";
+                    btn.innerText = "INITIALIZE LINK";
+                    btn.disabled = false;
+                }, 2000);
+            }
+        });
+    </script>
 </body>
 </html>
