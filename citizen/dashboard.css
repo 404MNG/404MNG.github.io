@@ -53,6 +53,25 @@ body {
     font-size: 1.5rem;
     font-weight: bold;
     margin-top: 5px;
+    transition: color 0.3s ease; /* Smooth color changes */
+}
+
+/* --- New Visual Effects --- */
+
+/* Makes the "ACTIVE" status glow green */
+#citizen-status {
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+/* If you have a warning, it will pulse slightly to catch the eye */
+#citizen-warnings {
+    animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
 }
 
 /* Animated Background Orbs */
