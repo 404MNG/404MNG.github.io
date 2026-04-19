@@ -1,1 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uxarieus | Citizen Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
 
+    <div class="dashboard-container">
+        <header style="margin-bottom: 20px;">
+            <h3 style="color: #bc13fe; letter-spacing: 3px; font-size: 0.8rem;">SYSTEM ACCESS GRANTED</h3>
+            <h1 style="font-size: 2.5rem; margin: 0;">CITIZEN: <span id="citizen-name">---</span></h1>
+            <p>RANK: <span id="citizen-rank" style="color: #bc13fe;">---</span></p>
+        </header>
+
+        <div id="warning-banner" style="display:none; background: rgba(255, 51, 102, 0.2); border: 1px solid #ff3366; color: #ff3366; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+            <strong>🚨 CITIZEN NOTICE:</strong> <span id="warning-text"></span>
+        </div>
+
+        <div class="dash-card">
+            <div class="stat-grid">
+                <div class="stat-item">
+                    <div class="stat-label">Town Status</div>
+                    <div id="citizen-status" class="stat-value" style="color: #00ff88;">ACTIVE</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Currency</div>
+                    <div class="stat-value">1,250 <small>ᚵ</small></div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Registered Home</div>
+                    <div class="stat-value">Sector 7</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                <a href="#" onclick="logout()" style="color: #ff3366; text-decoration: none; font-size: 0.8rem; border: 1px solid #ff3366; padding: 8px 15px; border-radius: 5px;">TERMINATE LINK</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check localStorage for session data
+        const name = localStorage.getItem('citizenName');
+        const rank = localStorage.getItem('citizenRank');
+        const status = localStorage.getItem('citizenStatus');
+        const warning = localStorage.getItem('citizenWarning');
+
+        if (!name) {
+            window.location.href = "../account/login.html";
+        } else {
+            document.getElementById('citizen-name').innerText = name.toUpperCase();
+            document.getElementById('citizen-rank').innerText = rank || 'Resident';
+            
+            const statusEl = document.getElementById('citizen-status');
+            statusEl.innerText = status.toUpperCase();
+
+            if (status === 'Warned') {
+                statusEl.style.color = "#ffcc00";
+                document.getElementById('warning-banner').style.display = 'block';
+                document.getElementById('warning-text').innerText = warning || "Contact High Council.";
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "../account/login.html";
+        }
+    </script>
+</body>
+</html>
