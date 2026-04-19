@@ -220,3 +220,13 @@ body {
     70% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
     100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
 }
+
+.front::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 40px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px white;
