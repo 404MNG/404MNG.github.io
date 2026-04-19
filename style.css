@@ -165,6 +165,56 @@ body {
     animation: pulse 2s infinite;
 }
 
+/* 1. Setup the flight path (The wrap moves across the screen) */
+.tardis-wrap {
+    position: fixed;
+    top: 40%;
+    left: -200px;
+    z-index: 9999;
+    perspective: 1000px; /* Gives the 3D depth */
+    animation: flightPath 8s linear forwards;
+}
+
+/* 2. Style the TARDIS and make it spin */
+.tardis-3d {
+    width: 60px;
+    height: 100px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: spin 3s infinite linear;
+}
+
+.side {
+    position: absolute;
+    width: 60px;
+    height: 100px;
+    background: #003b6f; /* TARDIS Blue */
+    border: 2px solid #002546;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.5), 0 0 10px rgba(0,229,255,0.3);
+}
+
+/* Position the sides to form a box */
+.front  { transform: translateZ(30px); }
+.back   { transform: rotateY(180deg) translateZ(30px); }
+.left   { transform: rotateY(-90deg) translateZ(30px); }
+.right  { transform: rotateY(90deg) translateZ(30px); }
+.top    { width: 60px; height: 60px; transform: rotateX(90deg) translateZ(30px); background: #004a8d; }
+.bottom { width: 60px; height: 60px; transform: rotateX(-90deg) translateZ(70px); background: #001a33; }
+
+/* The "Spinning through space" animation */
+@keyframes spin {
+    from { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+    to { transform: rotateX(360deg) rotateY(720deg) rotateZ(360deg); }
+}
+
+/* The Flight Path across the screen */
+@keyframes flightPath {
+    0% { left: -150px; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { left: 110%; opacity: 0; }
+}
+
 @keyframes pulse {
     0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
     70% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
