@@ -1,168 +1,169 @@
-/* --- Base Setup --- */
+/* --- Core Setup & Stability --- */
 body {
     font-family: 'Sansation', sans-serif;
     background-color: #0a0a0c;
     color: #ffffff;
     margin: 0;
+    padding: 0;
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Stops the GUI from moving when TARDIS flies */
+    overflow: hidden; /* Stops any movement/shifting */
     position: relative;
 }
 
-/* --- Animated Background Orbs --- */
+/* --- Ghostly Background Orbs --- */
 .bg-orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.4;
-    animation: float 10s infinite alternate ease-in-out;
+    filter: blur(100px);
+    opacity: 0.3;
+    animation: nebulaFloat 15s infinite alternate ease-in-out;
     z-index: -1;
+    pointer-events: none;
 }
 
-.orb-1 { width: 400px; height: 400px; background: #0044ff; top: -100px; left: -100px; }
-.orb-2 { width: 300px; height: 300px; background: #8800ff; bottom: -50px; right: -50px; animation-delay: -5s; }
+.orb-1 { width: 500px; height: 500px; background: #0044ff; top: -150px; left: -150px; }
+.orb-2 { width: 400px; height: 400px; background: #8800ff; bottom: -100px; right: -100px; animation-delay: -7s; }
 
-@keyframes float {
-    0% { transform: translateY(0px) scale(1); }
-    100% { transform: translateY(50px) scale(1.2); }
+@keyframes nebulaFloat {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(60px, 40px); }
 }
 
-/* --- Main Layout (The "Cool" Menu) --- */
+/* --- Main GUI Layout --- */
 .main-container {
     width: 90%;
     max-width: 1000px;
     text-align: center;
     z-index: 10;
+    position: relative;
 }
 
-.subtitle { color: #00e5ff; letter-spacing: 4px; font-size: 0.9rem; text-transform: uppercase; }
-.glitch-title { font-size: 4rem; letter-spacing: 8px; margin: 10px 0; text-shadow: 0 0 20px rgba(0, 229, 255, 0.5); }
-.hero p { color: #a0a0b0; font-size: 1.2rem; margin-bottom: 50px; }
+.subtitle { color: #00e5ff; letter-spacing: 5px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; }
+.glitch-title { font-size: 4.5rem; letter-spacing: 10px; margin: 15px 0; text-shadow: 0 0 30px rgba(0, 229, 255, 0.4); }
+.hero p { color: #a0a0b0; font-size: 1.1rem; margin-bottom: 60px; letter-spacing: 1px; }
 
+/* --- Glass Cards --- */
 .menu-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-    margin-bottom: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
 }
 
 .menu-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 30px 25px;
-    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    padding: 35px 25px;
+    border-radius: 20px;
     text-decoration: none;
     color: white;
     display: flex;
     align-items: center;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 .menu-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-12px);
+    background: rgba(255, 255, 255, 0.07);
     border-color: var(--accent-color);
-    box-shadow: 0 10px 30px -10px var(--accent-color);
+    box-shadow: 0 15px 40px -15px var(--accent-color);
 }
 
 .menu-card::before {
     content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 4px;
     background: var(--accent-color); opacity: 0; transition: opacity 0.3s;
 }
-
 .menu-card:hover::before { opacity: 1; }
-.card-icon { font-size: 2.5rem; margin-right: 20px; }
-.card-info h3 { margin: 0 0 5px 0; color: #fff; }
-.card-info p { margin: 0; font-size: 0.9rem; color: #a0a0b0; }
 
+.card-icon { font-size: 2.8rem; margin-right: 20px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); }
+.card-info h3 { margin: 0 0 5px 0; font-size: 1.4rem; }
+.card-info p { margin: 0; font-size: 0.95rem; color: #8e8e9e; }
+
+/* --- Footer --- */
 .server-status {
-    display: inline-flex;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px 20px;
-    border-radius: 50px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: inline-flex; align-items: center; background: rgba(0, 0, 0, 0.4);
+    padding: 12px 25px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.85rem; letter-spacing: 1px;
 }
+.pulse-dot { width: 10px; height: 10px; background: #00ff88; border-radius: 50%; margin-right: 12px; box-shadow: 0 0 15px #00ff88; animation: pulseGlow 2s infinite; }
+@keyframes pulseGlow { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-.pulse-dot {
-    width: 12px; height: 12px; background-color: #00ff88;
-    border-radius: 50%; margin-right: 10px; animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
-    70% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
-}
-
-/* --- 3D TARDIS DETAILS --- */
+/* --- 3D TARDIS (THE REFINEMENT) --- */
 .tardis-wrap {
-    position: fixed;
-    top: 25%; left: -200px;
-    z-index: 9999;
-    perspective: 1000px;
+    position: fixed; top: 20%; left: -300px;
+    z-index: 9999; perspective: 1200px;
     pointer-events: none;
-    animation: flightPath 8s linear forwards;
+    animation: flightPath 10s linear forwards;
 }
 
 .tardis-3d {
-    width: 60px; height: 100px;
-    position: relative;
-    transform-style: preserve-3d;
-    animation: spin 4s infinite linear;
+    width: 65px; height: 110px;
+    position: relative; transform-style: preserve-3d;
+    animation: spinShip 5s infinite linear;
 }
 
 .side {
-    position: absolute;
-    width: 60px; height: 100px;
-    background: #003b6f; /* TARDIS BLUE */
-    border: 1px solid #002546;
+    position: absolute; width: 65px; height: 110px;
+    background: #003b6f; border: 1px solid #002546;
 }
 
-/* Police Box Sign & Door Panels */
-.side::after {
+/* Specific Face Styling */
+.front, .back, .left, .right {
+    /* The Door Panels */
+    background: radial-gradient(circle at center, #004a8d 0%, #003b6f 100%);
+}
+
+/* Police Box Header (ONLY on vertical sides) */
+.front::after, .back::after, .left::after, .right::after {
     content: 'POLICE BOX';
-    position: absolute; top: 5px; left: 5px; width: 48px; height: 8px;
-    background: #000; color: #fff; font-size: 5px; text-align: center; line-height: 8px; border: 1px solid #fff;
+    position: absolute; top: 6px; left: 5px; width: 53px; height: 9px;
+    background: #000; color: #fff; font-size: 5px; text-align: center;
+    line-height: 9px; border: 1px solid #fff; font-family: 'Courier New', monospace;
 }
 
-.side::before {
-    content: ''; position: absolute; top: 18px; left: 8px; width: 44px; height: 75px;
-    background: linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px) 0 0,
-                linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px) 0 0;
-    background-size: 22px 25px; border: 1px solid rgba(0,0,0,0.2);
+/* Door Panels Logic */
+.front::before, .back::before, .left::before, .right::before {
+    content: ''; position: absolute; top: 20px; left: 10px; width: 45px; height: 80px;
+    background: 
+        linear-gradient(90deg, rgba(0,0,0,0.2) 2px, transparent 2px) 0 0,
+        linear-gradient(rgba(0,0,0,0.2) 2px, transparent 2px) 0 0;
+    background-size: 22px 27px;
 }
 
-.front::before { background: rgba(255,255,255,0.7); box-shadow: 0 0 10px #fff; height: 20px; top: 18px; }
+/* The Glowing Window (Front Only) */
+.front::before {
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 20px #fff;
+    height: 22px; width: 38px; left: 13px; top: 22px;
+}
 
-/* Positions */
-.front  { transform: translateZ(30px); }
-.back   { transform: rotateY(180deg) translateZ(30px); }
-.left   { transform: rotateY(-90deg) translateZ(30px); }
-.right  { transform: rotateY(90deg) translateZ(30px); }
-.top    { width: 60px; height: 60px; transform: rotateX(90deg) translateZ(30px); background: #004a8d; }
-.bottom { width: 60px; height: 60px; transform: rotateX(-90deg) translateZ(70px); background: #001a33; }
+/* 3D Geometry */
+.front  { transform: translateZ(32px); }
+.back   { transform: rotateY(180deg) translateZ(32px); }
+.left   { transform: rotateY(-90deg) translateZ(32px); }
+.right  { transform: rotateY(90deg) translateZ(32px); }
+.top    { width: 65px; height: 65px; transform: rotateX(90deg) translateZ(32px); background: #004a8d; }
+.bottom { width: 65px; height: 65px; transform: rotateX(-90deg) translateZ(78px); background: #001a33; }
 
-/* The Lamp on Top */
+/* The Beacon Lamp */
 .top::after {
-    content: ''; position: absolute; top: 22px; left: 22px; width: 15px; height: 15px;
-    background: #fff; border-radius: 50%; box-shadow: 0 0 15px #fff; border: none;
+    content: ''; position: absolute; top: 25px; left: 25px; width: 15px; height: 15px;
+    background: #fff; border-radius: 50%; box-shadow: 0 0 25px #fff;
 }
 
-@keyframes spin {
-    from { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-    to { transform: rotateX(360deg) rotateY(720deg) rotateZ(360deg); }
+@keyframes spinShip {
+    0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
+    100% { transform: rotateX(360deg) rotateY(720deg) rotateZ(180deg); }
 }
 
 @keyframes flightPath {
-    0% { left: -150px; opacity: 0; }
+    0% { left: -200px; top: 10%; opacity: 0; }
     10% { opacity: 1; }
     90% { opacity: 1; }
-    100% { left: 110%; opacity: 0; }
+    100% { left: 110%; top: 40%; opacity: 0; }
 }
