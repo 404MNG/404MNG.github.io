@@ -79,10 +79,10 @@
             const { data, error } = await _supabase
                 .from('citizens')
                 .select('*')
-                .eq('uuid', playerUUID)
+                .eq('uuid', playerUUID.toUpperCase()) 
                 .eq('access_key', keyVal)
                 .single();
-
+            
             if (error || !data) {
                 throw new Error("Invalid Signature");
             }
