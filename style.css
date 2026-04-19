@@ -29,6 +29,24 @@ body {
     font-family: inherit; /* Makes the font match the body */
 }
 
+a {
+    text-decoration: none; /* Removes the default underline */
+    color: #007bff;        /* Changes the blue to your specific button blue */
+    font-weight: bold;     /* Makes them stand out slightly more */
+    transition: color 0.3s ease; /* Makes the color change smooth */
+}
+
+/* This targets the links when you hover over them */
+a:hover {
+    color: #0056b3;        /* A darker blue when hovering */
+    text-decoration: underline; /* Adds the underline back only on hover */
+}
+
+/* This handles the 'purple' visited link issue */
+a:visited {
+    color: #007bff;        /* Keeps them blue even after you click them */
+}
+
 /* Container for the buttons to keep them side-by-side */
 .button-group {
     margin-top: 15px;
