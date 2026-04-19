@@ -1,9 +1,46 @@
-<html>
-
-<a href="../index.html">Back to Home</a>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="../style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uxarieus | Secure Access</title>
+    <link rel="stylesheet" href="login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@400;700&display=swap" rel="stylesheet">
 </head>
+<body>
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
 
+    <div class="login-container">
+        <a href="../index.html" class="back-link">← TERMINAL EXIT</a>
+
+        <div class="login-card">
+            <div class="scan-line"></div>
+            
+            <header class="login-header">
+                <h3 class="subtitle">SECURITY CLEARANCE</h3>
+                <h1 class="glitch-title" style="font-size: 2.5rem;">CITIZEN LOGIN</h1>
+                <p>Verifying biological signature...</p>
+            </header>
+
+            <form class="login-form">
+                <div class="input-group">
+                    <label>CITIZEN ID</label>
+                    <input type="text" placeholder="Username" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>ACCESS KEY</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="login-btn">INITIALIZE LINK</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Encryption: <strong>1024-BIT GALLIFREYAN</strong></p>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
