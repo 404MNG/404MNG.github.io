@@ -9,8 +9,38 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow: hidden; /* This keeps the orbs from creating scrollbars */
     position: relative;
+}
+
+/* --- Navigation (The Return Button) --- */
+.nav-header {
+    position: absolute; /* Keeps it pinned to the top left */
+    top: 30px;
+    left: 30px;
+    z-index: 100;
+}
+
+.back-btn {
+    color: #bc13fe;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    border: 1px solid rgba(188, 19, 254, 0.3);
+    padding: 12px 24px;
+    border-radius: 5px;
+    background: rgba(188, 19, 254, 0.05);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.back-btn:hover {
+    background: rgba(188, 19, 254, 0.2);
+    box-shadow: 0 0 20px rgba(188, 19, 254, 0.4);
+    border-color: #bc13fe;
+    transform: translateY(-2px); /* Makes it feel "clickable" */
 }
 
 /* --- Background --- */
