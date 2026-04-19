@@ -1,14 +1,14 @@
 /* --- Base Setup --- */
 body {
     font-family: 'Sansation', sans-serif;
-    background-color: #0a0a0c; /* Deep space black */
+    background-color: #0a0a0c;
     color: #ffffff;
     margin: 0;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Stops scrollbars from the background animation */
+    overflow: hidden;
     position: relative;
 }
 
@@ -23,20 +23,16 @@ body {
 }
 
 .orb-1 {
-    width: 400px;
-    height: 400px;
+    width: 400px; height: 400px;
     background: #0044ff;
-    top: -100px;
-    left: -100px;
+    top: -100px; left: -100px;
 }
 
 .orb-2 {
-    width: 300px;
-    height: 300px;
+    width: 300px; height: 300px;
     background: #8800ff;
-    bottom: -50px;
-    right: -50px;
-    animation-delay: -5s; /* Makes it pulse at a different time */
+    bottom: -50px; right: -50px;
+    animation-delay: -5s;
 }
 
 @keyframes float {
@@ -52,7 +48,6 @@ body {
     z-index: 10;
 }
 
-/* --- Hero Section --- */
 .subtitle {
     color: #00e5ff;
     letter-spacing: 4px;
@@ -85,63 +80,39 @@ body {
 .menu-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px); /* The "Frosted Glass" effect */
+    backdrop-filter: blur(10px);
     padding: 30px 25px;
     border-radius: 16px;
     text-decoration: none;
     color: white;
     display: flex;
     align-items: center;
-    text-align: left;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy transition */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
     overflow: hidden;
 }
 
-/* Hover Effects */
 .menu-card:hover {
     transform: translateY(-10px);
     background: rgba(255, 255, 255, 0.08);
-    /* Uses the variable defined in the HTML to glow a specific color */
     border-color: var(--accent-color);
     box-shadow: 0 10px 30px -10px var(--accent-color);
 }
 
-/* Adds a cool colored line on the left of each card */
 .menu-card::before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 4px;
+    left: 0; top: 0; height: 100%; width: 4px;
     background: var(--accent-color);
     opacity: 0;
     transition: opacity 0.3s;
 }
 
-.menu-card:hover::before {
-    opacity: 1;
-}
+.menu-card:hover::before { opacity: 1; }
 
-.card-icon {
-    font-size: 2.5rem;
-    margin-right: 20px;
-    filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
-}
-
-.card-info h3 {
-    margin: 0 0 5px 0;
-    font-size: 1.3rem;
-    color: #ffffff;
-}
-
-.card-info p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: #a0a0b0;
-    line-height: 1.4;
-}
+.card-icon { font-size: 2.5rem; margin-right: 20px; }
+.card-info h3 { margin: 0 0 5px 0; color: #fff; }
+.card-info p { margin: 0; font-size: 0.9rem; color: #a0a0b0; }
 
 /* --- Status Footer --- */
 .server-status {
@@ -151,68 +122,14 @@ body {
     padding: 10px 20px;
     border-radius: 50px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.9rem;
-    letter-spacing: 1px;
 }
 
 .pulse-dot {
-    width: 12px;
-    height: 12px;
+    width: 12px; height: 12px;
     background-color: #00ff88;
     border-radius: 50%;
     margin-right: 10px;
-    box-shadow: 0 0 15px #00ff88;
     animation: pulse 2s infinite;
-}
-
-/* 1. Setup the flight path (The wrap moves across the screen) */
-.tardis-wrap {
-    position: fixed;
-    top: 40%;
-    left: -200px;
-    z-index: 9999;
-    perspective: 1000px; /* Gives the 3D depth */
-    animation: flightPath 8s linear forwards;
-}
-
-/* 2. Style the TARDIS and make it spin */
-.tardis-3d {
-    width: 60px;
-    height: 100px;
-    position: relative;
-    transform-style: preserve-3d;
-    animation: spin 3s infinite linear;
-}
-
-.side {
-    position: absolute;
-    width: 60px;
-    height: 100px;
-    background: #003b6f; /* TARDIS Blue */
-    border: 2px solid #002546;
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.5), 0 0 10px rgba(0,229,255,0.3);
-}
-
-/* Position the sides to form a box */
-.front  { transform: translateZ(30px); }
-.back   { transform: rotateY(180deg) translateZ(30px); }
-.left   { transform: rotateY(-90deg) translateZ(30px); }
-.right  { transform: rotateY(90deg) translateZ(30px); }
-.top    { width: 60px; height: 60px; transform: rotateX(90deg) translateZ(30px); background: #004a8d; }
-.bottom { width: 60px; height: 60px; transform: rotateX(-90deg) translateZ(70px); background: #001a33; }
-
-/* The "Spinning through space" animation */
-@keyframes spin {
-    from { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-    to { transform: rotateX(360deg) rotateY(720deg) rotateZ(360deg); }
-}
-
-/* The Flight Path across the screen */
-@keyframes flightPath {
-    0% { left: -150px; opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { left: 110%; opacity: 0; }
 }
 
 @keyframes pulse {
@@ -221,40 +138,59 @@ body {
     100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
 }
 
-.front::after {
-    content: '';
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 40px;
-    height: 30px;
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 10px white;
+/* --- 3D TARDIS Logic --- */
+.tardis-wrap {
+    position: fixed;
+    top: 40%; left: -200px;
+    z-index: 9999;
+    perspective: 1000px;
+    animation: flightPath 8s linear forwards;
+}
 
-/* Adding the TARDIS window and sign detail */
+.tardis-3d {
+    width: 60px; height: 100px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: spin 3s infinite linear;
+}
+
+.side {
+    position: absolute;
+    width: 60px; height: 100px;
+    background: #003b6f;
+    border: 1px solid #002546;
+}
+
+.front  { transform: translateZ(30px); }
+.back   { transform: rotateY(180deg) translateZ(30px); }
+.left   { transform: rotateY(-90deg) translateZ(30px); }
+.right  { transform: rotateY(90deg) translateZ(30px); }
+.top    { width: 60px; height: 60px; transform: rotateX(90deg) translateZ(30px); background: #004a8d; }
+.bottom { width: 60px; height: 60px; transform: rotateX(-90deg) translateZ(70px); background: #001a33; }
+
+/* TARDIS Details */
 .front::after {
     content: 'POLICE BOX';
     position: absolute;
-    top: 5px;
-    left: 5px;
-    width: 50px;
-    height: 10px;
-    background: #000;
-    color: white;
-    font-size: 6px;
-    text-align: center;
-    line-height: 10px;
-    border: 1px solid white;
+    top: 5px; left: 5px; width: 48px; height: 8px;
+    background: #000; color: #fff; font-size: 5px; text-align: center; border: 1px solid #fff;
 }
 
-/* Let's actually add the window separately now */
 .front::before {
     content: '';
     position: absolute;
-    top: 20px;
-    left: 15px;
-    width: 30px;
-    height: 25px;
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 10px white;
+    top: 18px; left: 12px; width: 35px; height: 25px;
+    background: rgba(255,255,255,0.8); box-shadow: 0 0 10px #fff;
+}
+
+@keyframes spin {
+    from { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+    to { transform: rotateX(360deg) rotateY(720deg) rotateZ(360deg); }
+}
+
+@keyframes flightPath {
+    0% { left: -150px; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { left: 110%; opacity: 0; }
 }
