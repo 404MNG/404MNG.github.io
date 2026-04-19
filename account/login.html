@@ -22,7 +22,7 @@
             <header class="login-header">
                 <h3 class="subtitle">SECURITY CLEARANCE</h3>
                 <h1 class="glitch-title">CITIZEN LOGIN</h1>
-                <p>Verifying biological signature...</p>
+                <p id="status-msg">Verifying biological signature...</p>
             </header>
 
             <form class="login-form">
@@ -42,15 +42,15 @@
     </div>
 
     <script>
-    // 1. YOUR CONNECTION DETAILS
+    // 1. CONNECTION DETAILS
     const supabaseUrl = 'https://rzzondwhtswpfeawujfu.supabase.co'; 
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ6em9uZHdodHN3cGZlYXd1amZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2MjU0NTgsImV4cCI6MjA5MjIwMTQ1OH0.goHmfnExU2y2n-SkG1T51RT4k8eAn2BTGdHVWcOA3OY';
     
-    // Use 'supabasejs' (the library's global name) to create the client
     const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
     const loginForm = document.querySelector('.login-form');
     const btn = document.querySelector('.login-btn');
+    const statusMsg = document.getElementById('status-msg');
 
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault(); 
@@ -58,15 +58,28 @@
         const userVal = document.getElementById('username').value.trim();
         const keyVal = document.getElementById('access_key').value.trim();
         
-        btn.innerText = "QUERYING DATABASE...";
+        btn.innerText = "FETCHING UUID...";
         btn.disabled = true;
 
         try {
-            // Use '_supabase' here as well
+            // STEP A: Fetch UUID from Mojang API (Handles name changes)
+            const mojangRes = await fetch(`https://api.minetools.eu/uuid/${userVal}`);
+            const mcData = await mojangRes.json();
+
+            if (mcData.status === "ERR") {
+                throw new Error("Citizen Not Found in Mojang DB");
+            }
+
+            const playerUUID = mcData.id; 
+            const currentName = mcData.name; // Their latest name
+
+            btn.innerText = "QUERYING RECORDS...";
+
+            // STEP B: Find citizen by UUID instead of Name
             const { data, error } = await _supabase
                 .from('citizens')
                 .select('*')
-                .eq('username', userVal)
+                .eq('uuid', playerUUID)
                 .eq('access_key', keyVal)
                 .single();
 
@@ -74,47 +87,54 @@
                 throw new Error("Invalid Signature");
             }
 
-                // 3. CHECK BANS/KICKS
-                const now = new Date();
-                const expiry = data.expiry_timestamp ? new Date(data.expiry_timestamp) : null;
-
-                if (data.status === 'Banned' || (data.status === 'Kicked' && expiry > now)) {
-                    const reason = data.punishment_reason || "Violation of Town Conduct";
-                    btn.style.background = "#ff3366";
-                    btn.innerText = "ACCESS REVOKED";
-                    alert(`🚨 ACCESS DENIED\nStatus: ${data.status}\nReason: ${reason}`);
-                    btn.disabled = false;
-                    return;
-                }
-
-                // 4. SUCCESS - SAVE TO LOCALSTORAGE
-                btn.style.background = "#00ff88";
-                btn.innerText = "ACCESS GRANTED";
-                
-                // Saving everything to browser memory for the dashboard
-                localStorage.setItem('citizenName', data.username);
-                localStorage.setItem('citizenRank', data.rank || 'Resident');
-                localStorage.setItem('citizenStatus', data.status);
-                localStorage.setItem('citizenSector', data.sector);
-                localStorage.setItem('citizenWarnings', data.warnings);
-                localStorage.setItem('citizenReason', data.punishment_reason);
-
-                setTimeout(() => {
-                    window.location.href = "../citizen/dashboard.html";
-                }, 1000);
-
-            } catch (err) {
-                // 5. ERROR HANDLING
-                console.error("Login Error:", err);
-                btn.style.background = "#ff3366";
-                btn.innerText = "INVALID SIGNATURE";
-                setTimeout(() => {
-                    btn.style.background = "#bc13fe";
-                    btn.innerText = "INITIALIZE LINK";
-                    btn.disabled = false;
-                }, 2000);
+            // STEP C: Auto-Update Username in Supabase if it changed
+            if (data.username !== currentName) {
+                await _supabase
+                    .from('citizens')
+                    .update({ username: currentName })
+                    .eq('uuid', playerUUID);
             }
-        });
+
+            // STEP D: CHECK BANS/KICKS
+            const now = new Date();
+            const expiry = data.expiry_timestamp ? new Date(data.expiry_timestamp) : null;
+
+            if (data.status === 'Banned' || (data.status === 'Kicked' && expiry > now)) {
+                const reason = data.punishment_reason || "Violation of Town Conduct";
+                btn.style.background = "#ff3366";
+                btn.innerText = "ACCESS REVOKED";
+                alert(`🚨 ACCESS DENIED\nStatus: ${data.status}\nReason: ${reason}`);
+                btn.disabled = false;
+                return;
+            }
+
+            // SUCCESS - SAVE TO LOCALSTORAGE
+            btn.style.background = "#00ff88";
+            btn.innerText = "ACCESS GRANTED";
+            
+            localStorage.setItem('citizenName', currentName);
+            localStorage.setItem('citizenRank', data.rank || 'Resident');
+            localStorage.setItem('citizenStatus', data.status);
+            localStorage.setItem('citizenSector', data.sector);
+            localStorage.setItem('citizenWarnings', data.warnings);
+            localStorage.setItem('citizenReason', data.punishment_reason);
+
+            setTimeout(() => {
+                window.location.href = "../citizen/dashboard.html";
+            }, 1000);
+
+        } catch (err) {
+            console.error("Login Error:", err);
+            btn.style.background = "#ff3366";
+            btn.innerText = (err.message === "Citizen Not Found in Mojang DB") ? "ID NOT RECOGNIZED" : "INVALID SIGNATURE";
+            
+            setTimeout(() => {
+                btn.style.background = "#bc13fe";
+                btn.innerText = "INITIALIZE LINK";
+                btn.disabled = false;
+            }, 2000);
+        }
+    });
     </script>
 </body>
 </html>
