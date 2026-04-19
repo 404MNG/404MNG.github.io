@@ -4,11 +4,12 @@ body {
     background-color: #0a0a0c;
     color: #ffffff;
     margin: 0;
-    min-height: 100vh;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow: hidden; /* Stops the GUI from moving when TARDIS flies */
     position: relative;
 }
 
@@ -17,30 +18,20 @@ body {
     position: absolute;
     border-radius: 50%;
     filter: blur(80px);
-    opacity: 0.5;
+    opacity: 0.4;
     animation: float 10s infinite alternate ease-in-out;
     z-index: -1;
 }
 
-.orb-1 {
-    width: 400px; height: 400px;
-    background: #0044ff;
-    top: -100px; left: -100px;
-}
-
-.orb-2 {
-    width: 300px; height: 300px;
-    background: #8800ff;
-    bottom: -50px; right: -50px;
-    animation-delay: -5s;
-}
+.orb-1 { width: 400px; height: 400px; background: #0044ff; top: -100px; left: -100px; }
+.orb-2 { width: 300px; height: 300px; background: #8800ff; bottom: -50px; right: -50px; animation-delay: -5s; }
 
 @keyframes float {
     0% { transform: translateY(0px) scale(1); }
     100% { transform: translateY(50px) scale(1.2); }
 }
 
-/* --- Main Layout --- */
+/* --- Main Layout (The "Cool" Menu) --- */
 .main-container {
     width: 90%;
     max-width: 1000px;
@@ -48,28 +39,10 @@ body {
     z-index: 10;
 }
 
-.subtitle {
-    color: #00e5ff;
-    letter-spacing: 4px;
-    font-size: 0.9rem;
-    margin-bottom: -10px;
-    text-transform: uppercase;
-}
+.subtitle { color: #00e5ff; letter-spacing: 4px; font-size: 0.9rem; text-transform: uppercase; }
+.glitch-title { font-size: 4rem; letter-spacing: 8px; margin: 10px 0; text-shadow: 0 0 20px rgba(0, 229, 255, 0.5); }
+.hero p { color: #a0a0b0; font-size: 1.2rem; margin-bottom: 50px; }
 
-.glitch-title {
-    font-size: 4rem;
-    letter-spacing: 8px;
-    margin: 10px 0;
-    text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
-}
-
-.hero p {
-    color: #a0a0b0;
-    font-size: 1.2rem;
-    margin-bottom: 50px;
-}
-
-/* --- Glassmorphism Cards --- */
 .menu-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -94,27 +67,20 @@ body {
 
 .menu-card:hover {
     transform: translateY(-10px);
-    background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
     box-shadow: 0 10px 30px -10px var(--accent-color);
 }
 
 .menu-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; height: 100%; width: 4px;
-    background: var(--accent-color);
-    opacity: 0;
-    transition: opacity 0.3s;
+    content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 4px;
+    background: var(--accent-color); opacity: 0; transition: opacity 0.3s;
 }
 
 .menu-card:hover::before { opacity: 1; }
-
 .card-icon { font-size: 2.5rem; margin-right: 20px; }
 .card-info h3 { margin: 0 0 5px 0; color: #fff; }
 .card-info p { margin: 0; font-size: 0.9rem; color: #a0a0b0; }
 
-/* --- Status Footer --- */
 .server-status {
     display: inline-flex;
     align-items: center;
@@ -125,11 +91,8 @@ body {
 }
 
 .pulse-dot {
-    width: 12px; height: 12px;
-    background-color: #00ff88;
-    border-radius: 50%;
-    margin-right: 10px;
-    animation: pulse 2s infinite;
+    width: 12px; height: 12px; background-color: #00ff88;
+    border-radius: 50%; margin-right: 10px; animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
@@ -138,12 +101,13 @@ body {
     100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
 }
 
-/* --- 3D TARDIS Logic --- */
+/* --- 3D TARDIS DETAILS --- */
 .tardis-wrap {
     position: fixed;
-    top: 40%; left: -200px;
+    top: 25%; left: -200px;
     z-index: 9999;
     perspective: 1000px;
+    pointer-events: none;
     animation: flightPath 8s linear forwards;
 }
 
@@ -151,16 +115,33 @@ body {
     width: 60px; height: 100px;
     position: relative;
     transform-style: preserve-3d;
-    animation: spin 3s infinite linear;
+    animation: spin 4s infinite linear;
 }
 
 .side {
     position: absolute;
     width: 60px; height: 100px;
-    background: #003b6f;
+    background: #003b6f; /* TARDIS BLUE */
     border: 1px solid #002546;
 }
 
+/* Police Box Sign & Door Panels */
+.side::after {
+    content: 'POLICE BOX';
+    position: absolute; top: 5px; left: 5px; width: 48px; height: 8px;
+    background: #000; color: #fff; font-size: 5px; text-align: center; line-height: 8px; border: 1px solid #fff;
+}
+
+.side::before {
+    content: ''; position: absolute; top: 18px; left: 8px; width: 44px; height: 75px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px) 0 0,
+                linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px) 0 0;
+    background-size: 22px 25px; border: 1px solid rgba(0,0,0,0.2);
+}
+
+.front::before { background: rgba(255,255,255,0.7); box-shadow: 0 0 10px #fff; height: 20px; top: 18px; }
+
+/* Positions */
 .front  { transform: translateZ(30px); }
 .back   { transform: rotateY(180deg) translateZ(30px); }
 .left   { transform: rotateY(-90deg) translateZ(30px); }
@@ -168,19 +149,10 @@ body {
 .top    { width: 60px; height: 60px; transform: rotateX(90deg) translateZ(30px); background: #004a8d; }
 .bottom { width: 60px; height: 60px; transform: rotateX(-90deg) translateZ(70px); background: #001a33; }
 
-/* TARDIS Details */
-.front::after {
-    content: 'POLICE BOX';
-    position: absolute;
-    top: 5px; left: 5px; width: 48px; height: 8px;
-    background: #000; color: #fff; font-size: 5px; text-align: center; border: 1px solid #fff;
-}
-
-.front::before {
-    content: '';
-    position: absolute;
-    top: 18px; left: 12px; width: 35px; height: 25px;
-    background: rgba(255,255,255,0.8); box-shadow: 0 0 10px #fff;
+/* The Lamp on Top */
+.top::after {
+    content: ''; position: absolute; top: 22px; left: 22px; width: 15px; height: 15px;
+    background: #fff; border-radius: 50%; box-shadow: 0 0 15px #fff; border: none;
 }
 
 @keyframes spin {
