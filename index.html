@@ -1,50 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Uxarieus | Home</title>
+    <title>Uxarieus | Command Center</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <h3>Welcome to</h3>
-    <h1><b>Uxarieus!</b></h1>
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
 
-    <section>
-        <p>Welcome to Jayden and K256 town!
-            We really appreciate you joining us on our road to the best town in Dalek Mod Universe!
-        
-    
-                                                   
-        
-        
-        </p>
-        <a href="metro.html">Metro Page</a> <br>
-   <a href="rules/rules.html">Rules Page</a>
-    </section>
+    <div class="main-container">
+        <header class="hero">
+            <h3 class="subtitle">DALEK MOD UNIVERSE</h3>
+            <h1 class="glitch-title">UXARIEUS</h1>
+            <p>The Premiere Transit & Trading Hub</p>
+        </header>
 
-    <hr> <div class="login-box">
-        <h3>Join Uxarieus</h3>
-        <form>
-            <input type="text" placeholder="Username" class="my-input" required>
-            <input type="password" placeholder="Password" class="my-input" required>
-            <div class="button-group">
-                <button type="submit" class="login-btn">Login</button>
-                <button type="button" class="signup-btn">Create Account</button>
-            </div>
-        </form>
+        <div class="menu-grid">
+            
+            <a href="rules/rules.html" class="menu-card" style="--accent-color: #ff3366;">
+                <div class="card-icon">⚖️</div>
+                <div class="card-info">
+                    <h3>Town Ordinances</h3>
+                    <p>Essential rules and enforcement policies.</p>
+                </div>
+            </a>
+
+            <a href="metro.html" class="menu-card" style="--accent-color: #00e5ff;">
+                <div class="card-icon">🚇</div>
+                <div class="card-info">
+                    <h3>Metro Network</h3>
+                    <p>Live maps and transit routes.</p>
+                </div>
+            </a>
+
+            <a href="account/login.html" class="menu-card" style="--accent-color: #bc13fe;">
+                <div class="card-icon">🔐</div>
+                <div class="card-info">
+                    <h3>Citizen Portal</h3>
+                    <p>Access your secure town profile.</p>
+                </div>
+            </a>
+
+        </div>
+
+        <footer class="server-status">
+            <div class="pulse-dot"></div>
+            <span>System Status: <strong>Optimal</strong></span>
+        </footer>
     </div>
 
-    <br>
-
-    <nav>
-        <p>Direct Links:</p>
-        <a href="account/login.html">Go to Login Page</a> | 
-        <a href="account/signup.html">Go to Create Account</a>
-    </nav>
-
 </body>
-</html>
+</html>    
