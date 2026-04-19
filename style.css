@@ -76,3 +76,15 @@ a:hover {
 .signup-btn:hover {
     background-color: #1e7e34;
 }
+
+a, a:link, a:visited {
+    color: #007bff !important;
+    text-decoration: none !important;
+    font-weight: bold;
+}
+
+/* This handles the hover state */
+a:hover {
+    color: #0056b3 !important;
+    text-decoration: underline !important;
+}
