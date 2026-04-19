@@ -1,31 +1,37 @@
+/* Combined Body Styles */
 body {
-  font-family: 'Sansation:
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Uses Sansation first, falls back to Segoe UI if Sansation fails to load */
+    font-family: 'Sansation', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
     background-color: #f0f2f5;
     padding-top: 50px;
+    margin: 0;
 }
 
 /* Style the box we created in the HTML */
 .login-box {
     background: white;
-    display: inline-block; /* Keeps the box from stretching across the whole screen */
+    display: inline-block; 
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     margin-top: 20px;
 }
 
+/* Input field styling */
 .my-input {
     display: block;
-    width: 200px;
+    width: 250px; /* Slightly wider for better looks */
     margin: 10px auto;
-    padding: 8px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-family: inherit; /* Makes the font match the body */
+}
+
+/* Container for the buttons to keep them side-by-side */
+.button-group {
+    margin-top: 15px;
 }
 
 .login-btn {
@@ -35,6 +41,12 @@ body {
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #0056b3;
 }
 
 .signup-btn {
@@ -45,4 +57,21 @@ body {
     border-radius: 4px;
     cursor: pointer;
     margin-left: 5px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.signup-btn:hover {
+    background-color: #1e7e34;
+}
+
+/* Styling your links to look cleaner */
+a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
 }
