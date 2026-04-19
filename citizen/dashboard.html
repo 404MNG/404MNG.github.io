@@ -28,13 +28,15 @@
                     <div class="stat-label">Town Status</div>
                     <div id="citizen-status" class="stat-value" style="color: #00ff88;">ACTIVE</div>
                 </div>
+                
                 <div class="stat-item">
-                    <div class="stat-label">Currency</div>
-                    <div class="stat-value">1,250 <small>ᚵ</small></div>
+                    <div class="stat-label">Security Warnings</div>
+                    <div id="citizen-warnings" class="stat-value">0</div>
                 </div>
+
                 <div class="stat-item">
-                    <div class="stat-label">Registered Home</div>
-                    <div class="stat-value">Sector 7</div>
+                    <div class="stat-label">Assigned Sector</div>
+                    <div id="citizen-sector" class="stat-value">---</div>
                 </div>
             </div>
             
@@ -45,25 +47,36 @@
     </div>
 
     <script>
-        // Check localStorage for session data
+        // 1. Grab data from memory
         const name = localStorage.getItem('citizenName');
         const rank = localStorage.getItem('citizenRank');
         const status = localStorage.getItem('citizenStatus');
-        const warning = localStorage.getItem('citizenWarning');
+        const sector = localStorage.getItem('citizenSector');
+        const warnings = localStorage.getItem('citizenWarnings');
+        const reason = localStorage.getItem('citizenReason');
 
+        // 2. Security Check: If no name, kick to login
         if (!name) {
             window.location.href = "../account/login.html";
         } else {
+            // 3. Fill the UI
             document.getElementById('citizen-name').innerText = name.toUpperCase();
             document.getElementById('citizen-rank').innerText = rank || 'Resident';
+            document.getElementById('citizen-sector').innerText = sector || 'Sector 0';
+            document.getElementById('citizen-warnings').innerText = warnings || '0';
             
             const statusEl = document.getElementById('citizen-status');
-            statusEl.innerText = status.toUpperCase();
+            statusEl.innerText = status ? status.toUpperCase() : 'ACTIVE';
 
-            if (status === 'Warned') {
-                statusEl.style.color = "#ffcc00";
+            // 4. Warning System Logic
+            if (status === 'Warned' || parseInt(warnings) > 0) {
+                statusEl.style.color = "#ffcc00"; // Yellow for warning
                 document.getElementById('warning-banner').style.display = 'block';
-                document.getElementById('warning-text').innerText = warning || "Contact High Council.";
+                document.getElementById('warning-text').innerText = reason || "Violation of Code of Conduct. Please see High Council.";
+            }
+            
+            if (parseInt(warnings) > 0) {
+                document.getElementById('citizen-warnings').style.color = "#ff3366";
             }
         }
 
