@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uxarieus | Metro Transit Map</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Specific styles for the Metro Page */
+        .map-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metro-svg {
+            width: 100%;
+            height: auto;
+            max-height: 600px;
+            filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.2));
+        }
+
+        .station-label {
+            font-size: 14px;
+            fill: #fff;
+            font-family: 'Sansation', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .line-alpha { stroke: #00e5ff; stroke-width: 4; fill: none; stroke-dasharray: 1000; animation: drawLine 4s ease-out forwards; }
+        .line-beta { stroke: #ff3366; stroke-width: 4; fill: none; stroke-dasharray: 1000; animation: drawLine 4s ease-out forwards; }
+
+        @keyframes drawLine {
+            from { stroke-dashoffset: 1000; }
+            to { stroke-dashoffset: 0; }
+        }
+
+        .station-node {
+            fill: #0a0a0c;
+            stroke: #fff;
+            stroke-width: 2;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .station-node:hover {
+            fill: #00e5ff;
+            r: 8;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #00e5ff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+
+    <div class="main-container">
+        <a href="index.html" class="back-btn">← BACK TO TERMINAL</a>
+        
+        <header class="hero">
+            <h3 class="subtitle">TRANSIT AUTHORITY</h3>
+            <h1 class="glitch-title">METRO NETWORK</h1>
+            <p>Real-time navigational grid for the Uxarieus Sector</p>
+        </header>
+
+        <div class="map-container">
+            <svg viewBox="0 0 800 500" class="metro-svg">
+                <path d="M 100 250 L 250 250 L 400 150 L 550 150 L 700 250" class="line-alpha" />
+                
+                <path d="M 400 150 L 400 350 L 550 450" class="line-beta" />
+
+                <circle cx="400" cy="150" r="6" class="station-node" />
+                <text x="415" y="145" class="station-label">Uxarieus Central</text>
+
+                <circle cx="100" cy="250" r="5" class="station-node" />
+                <text x="80" y="280" class="station-label">West Trading Post</text>
+
+                <circle cx="700" cy="250" r="5" class="station-node" />
+                <text x="650" y="285" class="station-label">Dalek Wastelands</text>
+
+                <circle cx="550" cy="450" r="5" class="station-node" />
+                <text x="565" y="455" class="station-label">Industrial Sector</text>
+
+                <circle cx="400" cy="350" r="5" class="station-node" />
+                <text x="415" y="355" class="station-label">The Vaults</text>
+            </svg>
+        </div>
+
+        <footer class="server-status" style="margin-top: 30px;">
+            <div class="pulse-dot"></div>
+            <span>All Lines: <strong>Operational</strong></span>
+        </footer>
+    </div>
+</body>
+</html>
