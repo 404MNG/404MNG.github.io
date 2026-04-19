@@ -10,8 +10,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* This prevents the "jitter" when the TARDIS flies off-screen */
-    overflow: hidden; 
+    /* Prevents scrollbars while the TARDIS is in flight */
+    overflow-x: hidden; 
     position: relative;
 }
 
@@ -21,7 +21,6 @@ body {
     border-radius: 50%;
     filter: blur(100px);
     opacity: 0.3;
-    /* Removed 'scale' to prevent layout shifting */
     animation: nebulaFloat 15s infinite alternate ease-in-out;
     z-index: -1;
     pointer-events: none;
@@ -71,16 +70,17 @@ body {
     overflow: hidden;
 }
 
+/* Accent colors for specific cards */
 .menu-card:hover {
     transform: translateY(-12px);
     background: rgba(255, 255, 255, 0.07);
-    border-color: var(--accent-color);
-    box-shadow: 0 15px 40px -15px var(--accent-color);
+    border-color: #00e5ff;
+    box-shadow: 0 15px 40px -15px rgba(0, 229, 255, 0.5);
 }
 
 .menu-card::before {
     content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 4px;
-    background: var(--accent-color); opacity: 0; transition: opacity 0.3s;
+    background: #00e5ff; opacity: 0; transition: opacity 0.3s;
 }
 .menu-card:hover::before { opacity: 1; }
 
@@ -90,12 +90,50 @@ body {
 
 /* --- Status Footer --- */
 .server-status {
-    display: inline-flex; align-items: center; background: rgba(0, 0, 0, 0.4);
-    padding: 12px 25px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.85rem; letter-spacing: 1px;
+    display: inline-flex; 
+    align-items: center; 
+    background: rgba(0, 0, 0, 0.4);
+    padding: 12px 25px; 
+    border-radius: 50px; 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.85rem; 
+    letter-spacing: 1px;
 }
-.pulse-dot { width: 10px; height: 10px; background: #00ff88; border-radius: 50%; margin-right: 12px; box-shadow: 0 0 15px #00ff88; animation: pulseGlow 2s infinite; }
+
+.pulse-dot { 
+    width: 10px; 
+    height: 10px; 
+    background: #00ff88; 
+    border-radius: 50%; 
+    margin-right: 12px; 
+    box-shadow: 0 0 15px #00ff88; 
+    animation: pulseGlow 2s infinite; 
+}
+
 @keyframes pulseGlow { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+/* --- Discord Link Integration --- */
+.discord-link {
+    color: #5865F2;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 15px;
+    padding-left: 15px;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s ease;
+}
+
+.discord-link:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px #5865F2;
+}
+
+.discord-link i {
+    font-size: 1.1rem;
+}
 
 /* --- 3D TARDIS: PERFECTED GEOMETRY --- */
 .tardis-wrap {
@@ -116,7 +154,6 @@ body {
     background: #003b6f; border: 1px solid #002546;
 }
 
-/* Police Box Sign: ONLY applied to the four vertical walls */
 .front::after, .back::after, .left::after, .right::after {
     content: 'POLICE BOX';
     position: absolute; top: 6px; left: 5px; width: 53px; height: 9px;
@@ -125,7 +162,6 @@ body {
     font-weight: bold;
 }
 
-/* Door Panels: ONLY applied to vertical walls */
 .front::before, .back::before, .left::before, .right::before {
     content: ''; position: absolute; top: 20px; left: 10px; width: 45px; height: 80px;
     background: 
@@ -134,14 +170,12 @@ body {
     background-size: 22px 27px;
 }
 
-/* Glowing Window: ONLY on the Front side */
 .front::before {
     background: rgba(255, 255, 255, 0.85);
     box-shadow: 0 0 20px #fff;
     height: 22px; width: 38px; left: 13px; top: 22px;
 }
 
-/* 3D Sides Positioning */
 .front  { transform: translateZ(32px); }
 .back   { transform: rotateY(180deg) translateZ(32px); }
 .left   { transform: rotateY(-90deg) translateZ(32px); }
@@ -149,19 +183,16 @@ body {
 .top    { width: 65px; height: 65px; transform: rotateX(90deg) translateZ(32px); background: #004a8d; }
 .bottom { width: 65px; height: 65px; transform: rotateX(-90deg) translateZ(78px); background: #001a33; }
 
-/* The Beacon Lamp on top */
 .top::after {
     content: ''; position: absolute; top: 25px; left: 25px; width: 15px; height: 15px;
     background: #fff; border-radius: 50%; box-shadow: 0 0 25px #fff;
 }
 
-/* Animation: Complex Tumble */
 @keyframes spinShip {
     0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
     100% { transform: rotateX(360deg) rotateY(720deg) rotateZ(180deg); }
 }
 
-/* Animation: Drifting across the screen */
 @keyframes flightPath {
     0% { left: -200px; top: 10%; opacity: 0; }
     10% { opacity: 1; }
