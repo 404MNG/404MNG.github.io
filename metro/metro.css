@@ -1,1 +1,85 @@
+/* --- Global Styles --- */
+body {
+    font-family: 'Sansation', sans-serif;
+    background-color: #0a0a0c;
+    color: #ffffff;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
 
+/* --- Background --- */
+.bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.3;
+    animation: float 15s infinite alternate ease-in-out;
+    z-index: -1;
+}
+.orb-1 { width: 500px; height: 500px; background: #0044ff; top: -150px; left: -150px; }
+.orb-2 { width: 400px; height: 400px; background: #8800ff; bottom: -100px; right: -100px; }
+
+@keyframes float {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+/* --- Layout --- */
+.metro-container {
+    width: 90%;
+    max-width: 1100px;
+    text-align: center;
+    z-index: 10;
+}
+
+.hero p { color: #a0a0b0; margin-bottom: 30px; }
+.subtitle { color: #00e5ff; letter-spacing: 4px; font-size: 0.9rem; }
+.glitch-title { font-size: 3.5rem; letter-spacing: 6px; text-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
+
+.back-link {
+    color: #00e5ff;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 15px;
+    transition: 0.3s;
+}
+.back-link:hover { text-shadow: 0 0 10px #00e5ff; transform: scale(1.05); }
+
+/* --- The Map --- */
+.map-wrapper {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.metro-svg { width: 100%; height: auto; }
+
+.line-alpha { stroke: #00e5ff; stroke-width: 5; fill: none; stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw 4s forwards; }
+.line-beta { stroke: #ff3366; stroke-width: 5; fill: none; stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw 4s 1s forwards; }
+
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+.label { fill: white; font-size: 14px; font-weight: bold; text-shadow: 0 0 5px black; }
+.node { transition: 0.3s; cursor: pointer; }
+.node:hover { r: 10; fill: #fff; }
+
+/* --- Footer --- */
+.status-bar {
+    margin-top: 30px;
+    display: inline-flex;
+    align-items: center;
+    background: rgba(0,0,0,0.5);
+    padding: 10px 20px;
+    border-radius: 50px;
+}
+.dot { width: 10px; height: 10px; background: #00ff88; border-radius: 50%; margin-right: 10px; }
