@@ -1,90 +1,172 @@
-/* 1. Global Styles */
+/* --- Base Setup --- */
 body {
-    font-family: 'Sansation', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
-    background-color: #f0f2f5;
-    padding-top: 50px;
+    font-family: 'Sansation', sans-serif;
+    background-color: #0a0a0c; /* Deep space black */
+    color: #ffffff;
     margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Stops scrollbars from the background animation */
+    position: relative;
 }
 
-/* 2. Link Styles (The Fix) */
-/* We group a and a:visited so they always stay blue */
-a, a:visited {
+/* --- Animated Background Orbs --- */
+.bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    animation: float 10s infinite alternate ease-in-out;
+    z-index: -1;
+}
+
+.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: #0044ff;
+    top: -100px;
+    left: -100px;
+}
+
+.orb-2 {
+    width: 300px;
+    height: 300px;
+    background: #8800ff;
+    bottom: -50px;
+    right: -50px;
+    animation-delay: -5s; /* Makes it pulse at a different time */
+}
+
+@keyframes float {
+    0% { transform: translateY(0px) scale(1); }
+    100% { transform: translateY(50px) scale(1.2); }
+}
+
+/* --- Main Layout --- */
+.main-container {
+    width: 90%;
+    max-width: 1000px;
+    text-align: center;
+    z-index: 10;
+}
+
+/* --- Hero Section --- */
+.subtitle {
+    color: #00e5ff;
+    letter-spacing: 4px;
+    font-size: 0.9rem;
+    margin-bottom: -10px;
+    text-transform: uppercase;
+}
+
+.glitch-title {
+    font-size: 4rem;
+    letter-spacing: 8px;
+    margin: 10px 0;
+    text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+}
+
+.hero p {
+    color: #a0a0b0;
+    font-size: 1.2rem;
+    margin-bottom: 50px;
+}
+
+/* --- Glassmorphism Cards --- */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.menu-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px); /* The "Frosted Glass" effect */
+    padding: 30px 25px;
+    border-radius: 16px;
     text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-a:hover {
-    color: #0056b3;
-    text-decoration: underline;
-}
-
-/* 3. Layout Components */
-.login-box {
-    background: white;
-    display: inline-block; 
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    margin-top: 20px;
-}
-
-.my-input {
-    display: block;
-    width: 250px;
-    margin: 10px auto;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-family: inherit;
-}
-
-/* 4. Buttons */
-.button-group {
-    margin-top: 15px;
-}
-
-.login-btn {
-    background-color: #007bff;
     color: white;
-    border: none;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy transition */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover Effects */
+.menu-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.08);
+    /* Uses the variable defined in the HTML to glow a specific color */
+    border-color: var(--accent-color);
+    box-shadow: 0 10px 30px -10px var(--accent-color);
+}
+
+/* Adds a cool colored line on the left of each card */
+.menu-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: var(--accent-color);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.menu-card:hover::before {
+    opacity: 1;
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-right: 20px;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+}
+
+.card-info h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.3rem;
+    color: #ffffff;
+}
+
+.card-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #a0a0b0;
+    line-height: 1.4;
+}
+
+/* --- Status Footer --- */
+.server-status {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
     padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
 }
 
-.login-btn:hover {
-    background-color: #0056b3;
+.pulse-dot {
+    width: 12px;
+    height: 12px;
+    background-color: #00ff88;
+    border-radius: 50%;
+    margin-right: 10px;
+    box-shadow: 0 0 15px #00ff88;
+    animation: pulse 2s infinite;
 }
 
-.signup-btn {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 5px;
-    font-weight: bold;
-    transition: background 0.3s;
-}
-
-.signup-btn:hover {
-    background-color: #1e7e34;
-}
-
-a, a:link, a:visited {
-    color: #007bff !important;
-    text-decoration: none !important;
-    font-weight: bold;
-}
-
-/* This handles the hover state */
-a:hover {
-    color: #0056b3 !important;
-    text-decoration: underline !important;
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
 }
