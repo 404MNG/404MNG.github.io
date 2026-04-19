@@ -1,6 +1,5 @@
-/* Combined Body Styles */
+/* 1. Global Styles */
 body {
-    /* Uses Sansation first, falls back to Segoe UI if Sansation fails to load */
     font-family: 'Sansation', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
     background-color: #f0f2f5;
@@ -8,7 +7,21 @@ body {
     margin: 0;
 }
 
-/* Style the box we created in the HTML */
+/* 2. Link Styles (The Fix) */
+/* We group a and a:visited so they always stay blue */
+a, a:visited {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* 3. Layout Components */
 .login-box {
     background: white;
     display: inline-block; 
@@ -18,36 +31,17 @@ body {
     margin-top: 20px;
 }
 
-/* Input field styling */
 .my-input {
     display: block;
-    width: 250px; /* Slightly wider for better looks */
+    width: 250px;
     margin: 10px auto;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-family: inherit; /* Makes the font match the body */
+    font-family: inherit;
 }
 
-a {
-    text-decoration: none; /* Removes the default underline */
-    color: #007bff;        /* Changes the blue to your specific button blue */
-    font-weight: bold;     /* Makes them stand out slightly more */
-    transition: color 0.3s ease; /* Makes the color change smooth */
-}
-
-/* This targets the links when you hover over them */
-a:hover {
-    color: #0056b3;        /* A darker blue when hovering */
-    text-decoration: underline; /* Adds the underline back only on hover */
-}
-
-/* This handles the 'purple' visited link issue */
-a:visited {
-    color: #007bff;        /* Keeps them blue even after you click them */
-}
-
-/* Container for the buttons to keep them side-by-side */
+/* 4. Buttons */
 .button-group {
     margin-top: 15px;
 }
@@ -81,15 +75,4 @@ a:visited {
 
 .signup-btn:hover {
     background-color: #1e7e34;
-}
-
-/* Styling your links to look cleaner */
-a {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-a:hover {
-    text-decoration: underline;
 }
