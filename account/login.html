@@ -95,9 +95,9 @@
                 localStorage.setItem('citizenName', data.username);
                 localStorage.setItem('citizenRank', data.rank || 'Resident');
                 localStorage.setItem('citizenStatus', data.status);
-                localStorage.setItem('citizenSector', data.sector || 'Unknown'); // NEW
-                localStorage.setItem('citizenWarnings', data.warnings || '0');   // NEW
-                localStorage.setItem('citizenReason', data.punishment_reason || 'None');
+                localStorage.setItem('citizenSector', data.sector);
+                localStorage.setItem('citizenWarnings', data.warnings);
+                localStorage.setItem('citizenReason', data.punishment_reason);
 
                 setTimeout(() => {
                     window.location.href = "../citizen/dashboard.html";
