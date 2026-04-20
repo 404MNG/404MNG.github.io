@@ -5,49 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uxarieus | Metro Network</title>
     <link rel="stylesheet" href="metro.css">
-    <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     
-    <div class="nav-header">
-    <a href="../index.html" class="back-btn">← RETURN TO MAIN Menu</a>
-</div>
-    
+    <div class="bg-grid"></div>
     <div class="bg-orb orb-1"></div>
     <div class="bg-orb orb-2"></div>
 
+    <div class="container">
+        <nav class="nav-header">
+            <a href="../index.html" class="back-btn"><span>←</span> RETURN TO MAIN MENU</a>
+        </nav>
 
         <header class="hero">
             <h3 class="subtitle">TRANSIT AUTHORITY</h3>
-            <h1 class="glitch-title">METRO NETWORK</h1>
-            <p>Uxarieus Sector | Real-time Navigational Grid</p>
+            <h1 class="glitch-title" data-text="METRO NETWORK">METRO NETWORK</h1>
+            <p class="tagline">Uxarieus Sector | Real-time Navigational Grid</p>
         </header>
-<br>
+
         <div class="map-wrapper">
             <svg viewBox="0 0 800 500" class="metro-svg">
-                <path d="M 100 250 L 250 250 L 400 150 L 550 150 L 700 250" class="line-alpha" />
-                <path d="M 400 150 L 400 350 L 550 450" class="line-beta" />
+                <path d="M 100 250 L 250 250 L 400 150 L 550 150 L 700 250" class="line line-alpha" />
+                <path d="M 400 150 L 400 350 L 550 450" class="line line-beta" />
 
-                <circle cx="400" cy="150" r="8" fill="#fff" class="node" />
-                <text x="415" y="145" class="label">Uxarieus Central</text>
+                <circle cx="400" cy="150" r="10" class="node central-node" />
+                <text x="415" y="145" class="label label-main">Uxarieus Central</text>
 
-                <circle cx="100" cy="250" r="6" fill="#00e5ff" class="node" />
+                <circle cx="100" cy="250" r="6" class="node node-alpha" />
                 <text x="70" y="290" class="label">West Post</text>
 
-                <circle cx="700" cy="250" r="6" fill="#00e5ff" class="node" />
+                <circle cx="700" cy="250" r="6" class="node node-alpha" />
                 <text x="630" y="290" class="label">Parking Lot</text>
 
-                <circle cx="550" cy="450" r="6" fill="#ff3366" class="node" />
+                <circle cx="550" cy="450" r="6" class="node node-beta" />
                 <text x="565" y="455" class="label">Industrial</text>
 
-                <circle cx="400" cy="350" r="6" fill="#ff3366" class="node" />
+                <circle cx="400" cy="350" r="6" class="node node-beta" />
                 <text x="415" y="355" class="label">The Vaults</text>
             </svg>
         </div>
 
         <footer class="status-bar">
-            <div class="dot"></div>
-            <span>Metro Status: <strong>Stable</strong></span>
+            <div class="status-indicator">
+                <div class="dot pulse"></div>
+                <span>SYSTEM STATUS: <strong class="highlight">STABLE</strong></span>
+            </div>
+            <div class="system-time" id="clock">00:00:00</div>
         </footer>
     </div>
 </body>
