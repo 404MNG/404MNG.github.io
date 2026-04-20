@@ -89,7 +89,7 @@
             try {
                 // 2. Double check your table name in Supabase is 'profiles'
                 const { count, error } = await supabaseClient
-                    .from('profiles') 
+                    .from('citizens') 
                     .select('id', { count: 'exact', head: true });
 
                 if (error) throw error;
