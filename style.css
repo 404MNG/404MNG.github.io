@@ -15,6 +15,39 @@ body {
     position: relative;
 }
 
+/* --- Citizen Counter Styling --- */
+nav {
+    position: fixed; /* Fixed keeps it visible even if you scroll */
+    top: 20px;
+    right: 30px;
+    z-index: 9999;
+}
+
+.member-stat {
+    font-family: 'Sansation', sans-serif;
+    background: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+    backdrop-filter: blur(8px);    /* Modern blurred glass effect */
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-left: 4px solid #00e5ff; /* Matches your Metro Network color */
+    padding: 8px 16px;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#citizen-total {
+    color: #00e5ff;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+    font-size: 0.9rem;
+}
+
 nav {
     position: fixed;
     top: 20px;
