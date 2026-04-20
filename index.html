@@ -88,36 +88,52 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // 1. Enter your ACTUAL details here
+        // 1. Supabase Configuration
         const SUPABASE_URL = 'https://rzzondwhtswpfeawujfu.supabase.co'; 
         const SUPABASE_KEY = 'sb_publishable_j5UPlvsxbiY8gxE_54bvQQ_XWi0SZt8';
-        
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+        // 2. Function to sync the Citizen Count
         async function syncCitizenCount() {
             const display = document.getElementById('citizen-total');
-            
             try {
-                // 2. Double check your table name in Supabase is 'profiles'
                 const { count, error } = await supabaseClient
                     .from('citizens') 
                     .select('id', { count: 'exact', head: true });
 
                 if (error) throw error;
-
                 display.innerText = count !== null ? count : 0;
                 display.style.textShadow = "0 0 15px #00e5ff";
-                
             } catch (err) {
                 console.error('System Link Error:', err.message);
                 display.innerText = 'OFFLINE'; 
             }
         }
 
-        // Initialize on load
+        // 3. Music Control Logic (Keep this separate from the counter!)
+        const music = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-toggle');
+        const musicIcon = document.getElementById('music-icon');
+
+        // Set default volume so it's not too loud (0.0 to 1.0)
+        music.volume = 0.4;
+
+        musicBtn.addEventListener('click', () => {
+            if (music.paused) {
+                music.play();
+                musicIcon.classList.remove('fa-volume-mute');
+                musicIcon.classList.add('fa-volume-up');
+                musicBtn.style.borderColor = "#00e5ff"; 
+            } else {
+                music.pause();
+                musicIcon.classList.remove('fa-volume-up');
+                musicIcon.classList.add('fa-volume-mute');
+                musicBtn.style.borderColor = "#bc13fe"; 
+            }
+        });
+
+        // 4. Initial Launch
         syncCitizenCount();
-        
-        // Auto-refresh every 60 seconds
         setInterval(syncCitizenCount, 60000);
     </script>
 </body>
