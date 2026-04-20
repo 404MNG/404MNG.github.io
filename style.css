@@ -252,16 +252,18 @@ nav {
     z-index: -1;
     pointer-events: none;
     background-image: 
-        radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.4), transparent),
-        radial-gradient(3px 3px at 100px 150px, rgba(255, 255, 255, 0.3), transparent),
-        radial-gradient(2px 2px at 200px 50px, rgba(255, 255, 255, 0.35), transparent),
-        radial-gradient(3px 3px at 300px 250px, rgba(255, 255, 255, 0.25), transparent),
-        radial-gradient(2px 2px at 400px 120px, rgba(255, 255, 255, 0.4), transparent);
-    background-size: 300px 300px;
-    animation: dustFloating 120s linear infinite;
+        radial-gradient(2px 2px at 50px 50px, rgba(255, 255, 255, 0.4), transparent),
+        radial-gradient(3px 3px at 150px 150px, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(4px 4px at 250px 100px, rgba(255, 255, 255, 0.35), transparent),
+        radial-gradient(3px 3px at 100px 280px, rgba(255, 255, 255, 0.25), transparent),
+        radial-gradient(3px 3px at 280px 220px, rgba(255, 255, 255, 0.4), transparent);
+    background-size: 350px 350px;
+    animation: dustFloating 80s linear infinite;
+
+    opacity: 0.8;
 }
 
 @keyframes dustFloating {
     from { background-position: 0 0; }
-    to { background-position: 300px 600px; }
+    to { background-position: 350px 700px; }
 }
