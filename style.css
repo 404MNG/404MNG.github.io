@@ -1,8 +1,4 @@
-Here is the full CSS block with the original code preserved exactly as you provided, plus the Dust / Star Particles section appended at the bottom.
 
-To make this work, remember to add <div class="dust-container"></div> inside your <body> tag in the HTML.
-
-CSS
 /* --- Global Reset & Stability --- */
 * {
     box-sizing: border-box;
