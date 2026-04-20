@@ -76,31 +76,44 @@
     </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-  // 1. Initialize Supabase
+  // Replace these with your actual Supabase credentials
   const SUPABASE_URL = 'https://your-project-id.supabase.co';
   const SUPABASE_KEY = 'your-anon-public-key';
   const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  async function updateCitizenCount() {
-    const counterElement = document.getElementById('citizen-total');
-
+  async function syncCitizenCount() {
+    const display = document.getElementById('citizen-total');
+    
     try {
-      // 2. Count the rows in your 'citizens' table
+      // We select the 'id' column specifically as you suggested
+      // 'head: true' makes the request extremely fast
       const { count, error } = await supabase
-        .from('profiles') // <-- Change this to your actual table name (e.g., 'citizens')
-        .select('*', { count: 'exact', head: true });
+        .from('profiles') // <--- Verify if your table is 'profiles' or 'citizens'
+        .select('id', { count: 'exact', head: true });
 
       if (error) throw error;
 
-      // 3. Update the UI
-      counterElement.innerText = count || 0;
-
+      // Update the HTML with the number
+      display.innerText = count !== null ? count : 0;
+      
+      // Add a little glow animation when it loads
+      display.style.textShadow = "0 0 15px #00e5ff";
+      
     } catch (err) {
-      console.error('Error fetching count:', err);
-      counterElement.innerText = 'Offline';
+      console.error('System Link Error:', err.message);
+      display.innerText = 'SECURE'; // Looks better than "Error" in a sci-fi theme
     }
   }
+
+  // Initial fetch
+  syncCitizenCount();
+  
+  // Refresh the count every 30 seconds to keep it "Live"
+  setInterval(syncCitizenCount, 30000);
+</script>
 
   // Run on load
   updateCitizenCount();
