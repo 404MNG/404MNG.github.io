@@ -85,6 +85,7 @@ nav {
     max-width: 1000px;
     text-align: center;
     position: relative;
+    z-index: 10;
     /* Synchronized with TARDIS flight (12s) */
     animation: spatialWarp 12s linear forwards;
     will-change: filter, transform;
