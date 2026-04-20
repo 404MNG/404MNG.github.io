@@ -12,11 +12,11 @@
 </head>
 <body>
 
-<nav>
-  <div class="member-stat">
-    Citizens: <span id="citizen-total">Loading...</span>
-  </div>
-</nav>
+    <nav>
+        <div class="member-stat">
+            Citizens: <span id="citizen-total">Loading...</span>
+        </div>
+    </nav>
     
     <div class="tardis-wrap">
         <div class="tardis-3d">
@@ -66,58 +66,48 @@
         </div>
 
         <footer class="server-status">
-    <div class="pulse-dot"></div>
-    <span>System Status: <strong>Optimal</strong></span>
-    
-    <a href="https://discord.gg/55K5d5KR" target="_blank" class="discord-link">
-        <i class="fab fa-discord"></i> JOIN COMMS
-    </a>
-</footer>
+            <div class="pulse-dot"></div>
+            <span>System Status: <strong>Optimal</strong></span>
+            
+            <a href="https://discord.gg/55K5d5KR" target="_blank" class="discord-link">
+                <i class="fab fa-discord"></i> JOIN COMMS
+            </a>
+        </footer>
     </div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // 1. Enter your ACTUAL details here
+        const SUPABASE_URL = 'https://your-project-id.supabase.co'; 
+        const SUPABASE_KEY = 'your-anon-public-key';
+        
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-<script>
-  // Replace these with your actual Supabase credentials
-  const SUPABASE_URL = 'https://your-project-id.supabase.co';
-  const SUPABASE_KEY = 'your-anon-public-key';
-  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        async function syncCitizenCount() {
+            const display = document.getElementById('citizen-total');
+            
+            try {
+                // 2. Double check your table name in Supabase is 'profiles'
+                const { count, error } = await supabaseClient
+                    .from('profiles') 
+                    .select('id', { count: 'exact', head: true });
 
-  async function syncCitizenCount() {
-    const display = document.getElementById('citizen-total');
-    
-    try {
-      // We select the 'id' column specifically as you suggested
-      // 'head: true' makes the request extremely fast
-      const { count, error } = await supabase
-        .from('profiles') // <--- Verify if your table is 'profiles' or 'citizens'
-        .select('id', { count: 'exact', head: true });
+                if (error) throw error;
 
-      if (error) throw error;
+                display.innerText = count !== null ? count : 0;
+                display.style.textShadow = "0 0 15px #00e5ff";
+                
+            } catch (err) {
+                console.error('System Link Error:', err.message);
+                display.innerText = 'OFFLINE'; 
+            }
+        }
 
-      // Update the HTML with the number
-      display.innerText = count !== null ? count : 0;
-      
-      // Add a little glow animation when it loads
-      display.style.textShadow = "0 0 15px #00e5ff";
-      
-    } catch (err) {
-      console.error('System Link Error:', err.message);
-      display.innerText = 'SECURE'; // Looks better than "Error" in a sci-fi theme
-    }
-  }
-
-  // Initial fetch
-  syncCitizenCount();
-  
-  // Refresh the count every 30 seconds to keep it "Live"
-  setInterval(syncCitizenCount, 30000);
-</script>
-
-  // Run on load
-  updateCitizenCount();
-</script>
-    
+        // Initialize on load
+        syncCitizenCount();
+        
+        // Auto-refresh every 60 seconds
+        setInterval(syncCitizenCount, 60000);
+    </script>
 </body>
 </html>
