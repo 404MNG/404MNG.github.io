@@ -207,7 +207,7 @@ nav {
     position: fixed; 
     top: 25%; 
     left: -300px;
-    z-index: 1; 
+    z-index: 9999; 
     perspective: 1200px;
     pointer-events: none;
     animation: flightPath 12s linear forwards;
