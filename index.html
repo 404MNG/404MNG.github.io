@@ -140,5 +140,20 @@
         syncCitizenCount();
         setInterval(syncCitizenCount, 60000);
     </script>
+
+    <script>
+    const tardisSound = document.getElementById('tardis-sound');
+
+    // Trigger on the first click anywhere on the page
+    document.addEventListener('click', () => {
+        if (tardisSound.paused) {
+            tardisSound.volume = 0.6; // 60% volume
+            tardisSound.play().catch(error => {
+                console.log("Audio play failed:", error);
+            });
+        }
+    }, { once: true }); // '{ once: true }' makes sure it doesn't play every time you click
+</script>
+    
 </body>
 </html>
